@@ -1,11 +1,10 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import QRCodeControls from './components/QRCodeControls';
 import QRCodePreview from './components/QRCodePreview';
-import { downloadQRCode } from './utils/downloadQRCode';
 
 export default function Home() {
   const [text, setText] = useState('https://example.com');
@@ -13,7 +12,7 @@ export default function Home() {
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
   const [logo, setLogo] = useState<string | null>(null);
   const [logoSize, setLogoSize] = useState(50);
-  const [padding, setPadding] = useState(10);
+  const [padding, setPadding] = useState(5);
   const qrRef = useRef<HTMLDivElement>(null);
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,12 +26,8 @@ export default function Home() {
     }
   };
 
-  const handleDownload = useCallback(async () => {
-    await downloadQRCode(qrRef);
-  }, []);
-
   return (
-    <div className="min-h-screen bg-linear-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950 py-12 px-4">
+    <div className="bg-linear-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <Header />
 
@@ -51,7 +46,6 @@ export default function Home() {
             onLogoRemove={() => setLogo(null)}
             onLogoSizeChange={setLogoSize}
             onPaddingChange={setPadding}
-            onDownload={handleDownload}
           />
 
           <QRCodePreview
@@ -62,6 +56,7 @@ export default function Home() {
             logo={logo}
             logoSize={logoSize}
             padding={padding}
+            qrRef={qrRef}
           />
         </div>
 
