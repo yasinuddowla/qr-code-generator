@@ -28,7 +28,7 @@ const QRCodePreview = forwardRef<HTMLDivElement, QRCodePreviewProps>(
             <div ref={ref} className="inline-block">
               <QRCodeSVG
                 value={text}
-                size={300}
+                size={250}
                 bgColor={backgroundColor}
                 fgColor={dotColor}
                 level="H"
