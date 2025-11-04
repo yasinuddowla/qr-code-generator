@@ -16,7 +16,6 @@ interface QRCodeControlsProps {
   onLogoRemove: () => void;
   onLogoSizeChange: (size: number) => void;
   onPaddingChange: (padding: number) => void;
-  onDownload: () => void;
 }
 
 export default function QRCodeControls({
@@ -33,7 +32,6 @@ export default function QRCodeControls({
   onLogoRemove,
   onLogoSizeChange,
   onPaddingChange,
-  onDownload,
 }: QRCodeControlsProps) {
   return (
     <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-6 space-y-6">
@@ -90,15 +88,6 @@ export default function QRCodeControls({
         max={50}
         onChange={onPaddingChange}
       />
-
-      {/* Download Button */}
-      <button
-        onClick={onDownload}
-        disabled={!text.trim()}
-        className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-      >
-        Download QR Code
-      </button>
     </div>
   );
 }
