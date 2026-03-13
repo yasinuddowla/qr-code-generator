@@ -123,38 +123,40 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
         {/* ---- Markers ---- */}
         {activeTab === 'markers' && (
           <>
-            <div className="space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Border (outer square)
-              </p>
-              <SelectInput
-                label="Border Style"
-                value={config.markerBorderStyle}
-                options={MARKER_BORDER_OPTIONS}
-                onChange={(v) => update({ markerBorderStyle: v as CornerSquareType })}
-              />
-              <GradientColorPicker
-                label="Border Color"
-                value={config.markerBorderColor}
-                onChange={(v) => update({ markerBorderColor: v })}
-              />
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  Border (outer square)
+                </p>
+                <SelectInput
+                  label="Border Style"
+                  value={config.markerBorderStyle}
+                  options={MARKER_BORDER_OPTIONS}
+                  onChange={(v) => update({ markerBorderStyle: v as CornerSquareType })}
+                />
+                <GradientColorPicker
+                  label="Border Color"
+                  value={config.markerBorderColor}
+                  onChange={(v) => update({ markerBorderColor: v })}
+                />
+              </div>
 
-            <div className="border-t border-zinc-200 dark:border-zinc-700 pt-5 space-y-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Center (inner dot)
-              </p>
-              <SelectInput
-                label="Center Style"
-                value={config.markerCenterStyle}
-                options={MARKER_CENTER_OPTIONS}
-                onChange={(v) => update({ markerCenterStyle: v as CornerDotType })}
-              />
-              <GradientColorPicker
-                label="Center Color"
-                value={config.markerCenterColor}
-                onChange={(v) => update({ markerCenterColor: v })}
-              />
+              <div className="space-y-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                  Center (inner dot)
+                </p>
+                <SelectInput
+                  label="Center Style"
+                  value={config.markerCenterStyle}
+                  options={MARKER_CENTER_OPTIONS}
+                  onChange={(v) => update({ markerCenterStyle: v as CornerDotType })}
+                />
+                <GradientColorPicker
+                  label="Center Color"
+                  value={config.markerCenterColor}
+                  onChange={(v) => update({ markerCenterColor: v })}
+                />
+              </div>
             </div>
           </>
         )}
