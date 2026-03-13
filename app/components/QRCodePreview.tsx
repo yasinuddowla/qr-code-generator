@@ -1,33 +1,33 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import type QRCodeStylingType from 'qr-code-styling';
 import { QRConfig } from '../types';
 import { buildQROptions } from '../utils/buildQROptions';
 
 interface Props {
   config: QRConfig;
+  isGenerating?: boolean;
 }
 
-export default function QRCodePreview({ config }: Props) {
+export default function QRCodePreview({ config, isGenerating = false }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const qrInstanceRef = useRef<QRCodeStylingType | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
+    setIsLoading(true);
     import('qr-code-styling').then(({ default: QRCodeStyling }) => {
       const options = buildQROptions(config);
-
-      if (!qrInstanceRef.current) {
-        qrInstanceRef.current = new QRCodeStyling(options);
-        if (containerRef.current) {
-          containerRef.current.innerHTML = '';
-          qrInstanceRef.current.append(containerRef.current);
-        }
-      } else {
-        qrInstanceRef.current.update(options);
+      qrInstanceRef.current = new QRCodeStyling(options);
+      if (containerRef.current) {
+        containerRef.current.innerHTML = '';
+        qrInstanceRef.current.append(containerRef.current);
       }
+      setIsLoading(false);
     });
   }, [config]);
 
@@ -46,7 +46,12 @@ export default function QRCodePreview({ config }: Props) {
     <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-6 flex flex-col">
       <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Preview</h2>
 
-      <div className="flex items-center justify-center flex-1 min-h-[300px] bg-zinc-100 dark:bg-zinc-900 rounded-lg p-8">
+      <div className="relative flex items-center justify-center flex-1 min-h-[300px] bg-zinc-100 dark:bg-zinc-900 rounded-lg p-8">
+        {(isLoading || isGenerating) && hasText && (
+          <div className="absolute inset-0 flex items-center justify-center bg-zinc-100/80 dark:bg-zinc-900/80 rounded-lg z-10">
+            <Loader2 size={32} className="animate-spin text-blue-500" />
+          </div>
+        )}
         {hasText ? (
           <div
             ref={containerRef}

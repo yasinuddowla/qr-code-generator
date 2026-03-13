@@ -57,17 +57,21 @@ export function makeColorConfig(color: string): ColorConfig {
   };
 }
 
-export const defaultConfig: QRConfig = {
-  text: 'https://example.com',
-  margin: 5,
-  backgroundRoundness: 0,
-  dotStyle: 'square',
-  dotColor: makeColorConfig('#000000'),
-  markerBorderStyle: 'square',
-  markerBorderColor: makeColorConfig('#000000'),
-  markerCenterStyle: 'square',
-  markerCenterColor: makeColorConfig('#000000'),
-  backgroundColor: makeColorConfig('#FFFFFF'),
-  logo: null,
-  logoSize: 20,
-};
+export function createDefaultConfig(): QRConfig {
+  return {
+    text: 'https://example.com',
+    margin: 5,
+    backgroundRoundness: 0,
+    dotStyle: 'square',
+    dotColor: makeColorConfig('#000000'),
+    markerBorderStyle: 'square',
+    markerBorderColor: makeColorConfig('#000000'),
+    markerCenterStyle: 'square',
+    markerCenterColor: makeColorConfig('#000000'),
+    backgroundColor: makeColorConfig('#FFFFFF'),
+    logo: null,
+    logoSize: 20,
+  };
+}
+
+export const defaultConfig: QRConfig = createDefaultConfig();

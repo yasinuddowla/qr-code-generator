@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Loader2 } from 'lucide-react';
-import { QRConfig, DotType, CornerSquareType, CornerDotType } from '../types';
+import { RotateCcw } from 'lucide-react';
+import { QRConfig, DotType, CornerSquareType, CornerDotType, createDefaultConfig } from '../types';
 import GradientColorPicker from './GradientColorPicker';
 import SelectInput from './SelectInput';
 import SliderInput from './SliderInput';
@@ -39,16 +39,11 @@ const TABS = [
 interface Props {
   config: QRConfig;
   onChange: (config: QRConfig) => void;
+  onGenerate: () => void;
 }
 
-export default function QRCodeControls({ config, onChange }: Props) {
+export default function QRCodeControls({ config, onChange, onGenerate }: Props) {
   const [activeTab, setActiveTab] = useState('content');
-  const [generating, setGenerating] = useState(false);
-
-  function handleGenerate() {
-    setGenerating(true);
-    setTimeout(() => setGenerating(false), 800);
-  }
 
   function update(partial: Partial<QRConfig>) {
     onChange({ ...config, ...partial });
@@ -208,15 +203,21 @@ export default function QRCodeControls({ config, onChange }: Props) {
         )}
       </div>
 
-      {/* Generate button */}
-      <div className="mt-6 pt-5 border-t border-zinc-200 dark:border-zinc-700">
+      {/* Generate + Reset buttons */}
+      <div className="mt-6 pt-5 border-t border-zinc-200 dark:border-zinc-700 flex gap-3">
         <button
-          onClick={handleGenerate}
-          disabled={generating}
-          className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors disabled:opacity-70 flex items-center justify-center gap-2"
+          onClick={() => onChange({ ...createDefaultConfig(), text: config.text })}
+          title="Reset all settings to default"
+          className="cursor-pointer px-4 py-3 bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-xl font-semibold hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors flex items-center gap-2"
         >
-          {generating && <Loader2 size={18} className="animate-spin" />}
-          {generating ? 'Generating...' : 'Generate QR Code'}
+          <RotateCcw size={16} />
+          Reset
+        </button>
+        <button
+          onClick={onGenerate}
+          className="flex-1 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center justify-center gap-2"
+        >
+          Generate QR Code
         </button>
       </div>
     </div>
