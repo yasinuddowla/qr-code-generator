@@ -58,12 +58,12 @@ export default function LogoUpload({
           </div>
           <div>
             <label className="block text-xs text-zinc-600 dark:text-zinc-400 mb-1">
-              Logo Size: {logoSize}px
+              Logo Size: {logoSize}%
             </label>
             <input
               type="range"
-              min="20"
-              max="100"
+              min="10"
+              max="40"
               value={logoSize}
               onChange={(e) => onLogoSizeChange(Number(e.target.value))}
               className="w-full"

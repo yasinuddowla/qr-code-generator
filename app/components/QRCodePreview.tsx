@@ -1,86 +1,85 @@
-import { forwardRef } from 'react';
-import { QRCodeSVG } from 'qrcode.react';
-import { downloadQRCode, DownloadFormat } from '../utils/downloadQRCode';
+'use client';
 
-interface QRCodePreviewProps {
-  text: string;
-  dotColor: string;
-  backgroundColor: string;
-  logo: string | null;
-  logoSize: number;
-  padding: number;
-  qrRef: React.RefObject<HTMLDivElement | null>;
+import { useEffect, useRef } from 'react';
+import type QRCodeStylingType from 'qr-code-styling';
+import { QRConfig } from '../types';
+import { buildQROptions } from '../utils/buildQROptions';
+
+interface Props {
+  config: QRConfig;
 }
 
-const QRCodePreview = forwardRef<HTMLDivElement, QRCodePreviewProps>(
-  ({ text, dotColor, backgroundColor, logo, logoSize, padding, qrRef }, ref) => {
-    const handleDownload = async (format: DownloadFormat) => {
-      await downloadQRCode(qrRef, format);
-    };
+export default function QRCodePreview({ config }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const qrInstanceRef = useRef<QRCodeStylingType | null>(null);
 
-    return (
-      <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-6">
-        <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
-          Preview
-        </h2>
-        <div className="flex items-center justify-center min-h-[300px] bg-zinc-100 dark:bg-zinc-900 rounded-lg p-8">
-          {text.trim() ? (
-            <div ref={ref} className="inline-block">
-              <QRCodeSVG
-                value={text}
-                size={250}
-                bgColor={backgroundColor}
-                fgColor={dotColor}
-                level="H"
-                marginSize={padding}
-                imageSettings={
-                  logo
-                    ? {
-                        src: logo,
-                        height: logoSize,
-                        width: logoSize,
-                        excavate: true,
-                      }
-                    : undefined
-                }
-              />
-            </div>
-          ) : (
-            <p className="text-zinc-500 dark:text-zinc-400 text-center">
-              Enter text or URL to generate QR code
-            </p>
-          )}
-        </div>
-        
-        {/* Download Buttons */}
-        {text.trim() && (
-          <div className="mt-6 flex justify-end gap-3">
-            <button
-              onClick={() => handleDownload('svg')}
-              className="px-4 py-2 bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg font-medium hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors text-sm"
-            >
-              SVG
-            </button>
-            <button
-              onClick={() => handleDownload('png')}
-              className="px-4 py-2 bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 rounded-lg font-medium hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors text-sm"
-            >
-              PNG
-            </button>
-            <button
-              onClick={() => handleDownload('jpg')}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors text-sm"
-            >
-              JPG
-            </button>
-          </div>
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    import('qr-code-styling').then(({ default: QRCodeStyling }) => {
+      const options = buildQROptions(config);
+
+      if (!qrInstanceRef.current) {
+        qrInstanceRef.current = new QRCodeStyling(options);
+        if (containerRef.current) {
+          containerRef.current.innerHTML = '';
+          qrInstanceRef.current.append(containerRef.current);
+        }
+      } else {
+        qrInstanceRef.current.update(options);
+      }
+    });
+  }, [config]);
+
+  function handleDownload(format: 'svg' | 'png' | 'jpg') {
+    if (!qrInstanceRef.current) return;
+    const extension = format === 'jpg' ? 'jpeg' : format;
+    qrInstanceRef.current.download({
+      name: 'qr-code',
+      extension: extension as 'svg' | 'png' | 'jpeg',
+    });
+  }
+
+  const hasText = config.text.trim().length > 0;
+
+  return (
+    <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-6 flex flex-col">
+      <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4">Preview</h2>
+
+      <div className="flex items-center justify-center flex-1 min-h-[300px] bg-zinc-100 dark:bg-zinc-900 rounded-lg p-8">
+        {hasText ? (
+          <div
+            ref={containerRef}
+            style={{
+              borderRadius: `${config.backgroundRoundness}%`,
+              overflow: 'hidden',
+              lineHeight: 0,
+            }}
+          />
+        ) : (
+          <p className="text-zinc-500 dark:text-zinc-400 text-center text-sm">
+            Enter text or URL to generate a QR code
+          </p>
         )}
       </div>
-    );
-  }
-);
 
-QRCodePreview.displayName = 'QRCodePreview';
-
-export default QRCodePreview;
-
+      {hasText && (
+        <div className="mt-6 flex justify-end gap-3">
+          {(['svg', 'png', 'jpg'] as const).map((fmt, i) => (
+            <button
+              key={fmt}
+              onClick={() => handleDownload(fmt)}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
+                i === 2
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-600'
+              }`}
+            >
+              {fmt.toUpperCase()}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
