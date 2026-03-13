@@ -70,15 +70,11 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
 
       {hasText && (
         <div className="mt-6 flex justify-end gap-3">
-          {(['svg', 'png', 'jpg'] as const).map((fmt, i) => (
+          {(['svg', 'png', 'jpg'] as const).map((fmt) => (
             <button
               key={fmt}
               onClick={() => handleDownload(fmt)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm ${
-                i === 2
-                  ? 'bg-blue-600 text-white hover:bg-blue-700'
-                  : 'bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-600'
-              }`}
+              className="px-4 py-2 rounded-lg font-medium transition-colors text-sm cursor-pointer bg-blue-600 text-white hover:bg-blue-700"
             >
               {fmt.toUpperCase()}
             </button>
