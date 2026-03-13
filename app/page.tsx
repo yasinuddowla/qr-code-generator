@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   return (
-    <div className="bg-linear-to-br from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950 py-8 px-4">
+    <div className="bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <Header />
 
