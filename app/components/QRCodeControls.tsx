@@ -30,10 +30,10 @@ const MARKER_CENTER_OPTIONS = [
 
 const TABS = [
   { id: 'content', label: 'Content' },
+  { id: 'logo', label: 'Logo' },
   { id: 'dots', label: 'Dots' },
   { id: 'markers', label: 'Markers' },
   { id: 'background', label: 'Background' },
-  { id: 'logo', label: 'Logo' },
 ];
 
 interface Props {
@@ -120,6 +120,22 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
           </div>
         )}
 
+        {/* ---- Logo ---- */}
+        {activeTab === 'logo' && (
+          <>
+            <LogoUpload
+              logo={config.logo}
+              logoSize={config.logoSize}
+              onLogoUpload={handleLogoUpload}
+              onLogoRemove={() => update({ logo: null })}
+              onLogoSizeChange={(v) => update({ logoSize: v })}
+            />
+            <p className="text-xs text-on-surface-variant">
+              Logo size is a percentage of the QR code area.
+            </p>
+          </>
+        )}
+
         {/* ---- Dots ---- */}
         {activeTab === 'dots' && (
           <>
@@ -202,22 +218,6 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
               onChange={(v) => update({ margin: v })}
               unit=""
             />
-          </>
-        )}
-
-        {/* ---- Logo ---- */}
-        {activeTab === 'logo' && (
-          <>
-            <LogoUpload
-              logo={config.logo}
-              logoSize={config.logoSize}
-              onLogoUpload={handleLogoUpload}
-              onLogoRemove={() => update({ logo: null })}
-              onLogoSizeChange={(v) => update({ logoSize: v })}
-            />
-            <p className="text-xs text-on-surface-variant">
-              Logo size is a percentage of the QR code area.
-            </p>
           </>
         )}
       </div>

@@ -52,12 +52,6 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
         boxShadow: 'var(--shadow-ambient)',
       }}
     >
-      <h2
-        className="text-2xl font-bold text-on-surface mb-6"
-        style={{ letterSpacing: '-0.02em' }}
-      >
-        Preview
-      </h2>
 
       {/* QR canvas — surface-container-lowest (white) as the illuminated output area */}
       <div

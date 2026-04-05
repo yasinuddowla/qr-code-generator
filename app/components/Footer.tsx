@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mt-16 pt-6">
+    <footer className="mt-16 pt-6 text-center">
       <div className="text-sm text-on-surface-variant">
         <p>
           By{' '}
