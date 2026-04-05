@@ -1,14 +1,14 @@
 export default function Footer() {
   return (
-    <footer className="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
-      <div className="text-center text-sm text-zinc-500 dark:text-zinc-500">
+    <footer className="mt-16 pt-6 text-center">
+      <div className="text-sm text-on-surface-variant">
         <p>
           By{' '}
           <a
             href="https://yasinuddowla.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-zinc-700 dark:hover:text-zinc-300 underline font-medium"
+            className="text-primary font-medium hover:opacity-70 transition-opacity"
           >
             Yasin Uddowla
           </a>
@@ -17,4 +17,3 @@ export default function Footer() {
     </footer>
   );
 }
-

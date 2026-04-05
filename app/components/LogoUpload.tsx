@@ -17,7 +17,7 @@ export default function LogoUpload({
 }: LogoUploadProps) {
   return (
     <div>
-      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+      <label className="block text-sm font-semibold text-on-surface mb-2">
         Logo (Optional)
       </label>
       {!logo ? (
@@ -31,13 +31,16 @@ export default function LogoUpload({
           />
           <label
             htmlFor="logo-upload"
-            className="block w-full px-4 py-3 border-2 border-dashed border-zinc-300 dark:border-zinc-600 rounded-lg text-center cursor-pointer hover:border-blue-500 dark:hover:border-blue-500 transition-colors text-zinc-600 dark:text-zinc-400"
+            className="block w-full px-4 py-4 rounded-2xl text-center cursor-pointer text-sm text-on-surface-variant transition-colors hover:bg-surface-container-low"
+            style={{
+              border: 'var(--border-ghost-dashed)',
+            }}
           >
             Click to upload logo
           </label>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="relative inline-block">
             {logo && (
               <Image
@@ -45,28 +48,31 @@ export default function LogoUpload({
                 alt="Logo preview"
                 width={96}
                 height={96}
-                className="max-w-24 max-h-24 object-contain rounded-lg border border-zinc-300 dark:border-zinc-600"
+                className="max-w-24 max-h-24 object-contain rounded-2xl"
+                style={{ border: 'var(--border-ghost)' }}
                 unoptimized
               />
             )}
             <button
               onClick={onLogoRemove}
-              className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-red-600 transition-colors"
+              className="absolute -top-2 -right-2 bg-primary text-on-primary rounded-full w-6 h-6 flex items-center justify-center text-xs hover:opacity-80 transition-opacity cursor-pointer"
             >
               ×
             </button>
           </div>
           <div>
-            <label className="block text-xs text-zinc-600 dark:text-zinc-400 mb-1">
-              Logo Size: {logoSize}%
-            </label>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-sm font-semibold text-on-surface">Logo Size</label>
+              <span className="text-xs font-medium text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded-full">
+                {logoSize}%
+              </span>
+            </div>
             <input
               type="range"
               min="10"
               max="40"
               value={logoSize}
               onChange={(e) => onLogoSizeChange(Number(e.target.value))}
-              className="w-full"
             />
           </div>
         </div>
@@ -74,4 +80,3 @@ export default function LogoUpload({
     </div>
   );
 }
-
