@@ -28,40 +28,38 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+        <label className="text-sm font-semibold text-on-surface">
           {label}
         </label>
-        <div className="flex rounded-lg overflow-hidden border border-zinc-300 dark:border-zinc-600 text-xs">
-          <button
-            type="button"
-            onClick={() => onChange({ ...value, mode: 'solid' })}
-            className={`px-3 py-1 font-medium transition-colors ${
-              !isGradient
-                ? 'bg-blue-500 text-white'
-                : 'bg-white dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-600'
-            }`}
-          >
-            Solid
-          </button>
-          <button
-            type="button"
-            onClick={() => onChange({ ...value, mode: 'gradient' })}
-            className={`px-3 py-1 font-medium transition-colors ${
-              isGradient
-                ? 'bg-blue-500 text-white'
-                : 'bg-white dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-600'
-            }`}
-          >
-            Gradient
-          </button>
+        {/* Solid / Gradient chip toggle */}
+        <div className="flex gap-1.5">
+          {(['solid', 'gradient'] as const).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => onChange({ ...value, mode })}
+              className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                value.mode === mode
+                  ? 'text-on-primary'
+                  : 'bg-secondary-fixed text-on-secondary-container hover:bg-surface-container-high'
+              }`}
+              style={
+                value.mode === mode
+                  ? { background: 'var(--gradient-primary-subtle)' }
+                  : {}
+              }
+            >
+              {mode.charAt(0).toUpperCase() + mode.slice(1)}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Preview bar */}
+      {/* Color preview bar — no border per no-line rule */}
       <div
-        className="h-6 rounded-md border border-zinc-300 dark:border-zinc-600 w-full"
+        className="h-6 rounded-2xl w-full"
         style={previewStyle}
       />
 
@@ -71,20 +69,22 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
             type="color"
             value={value.color}
             onChange={(e) => onChange({ ...value, color: e.target.value })}
-            className="h-9 w-12 cursor-pointer rounded border border-zinc-300 dark:border-zinc-600"
+            className="h-9 w-12 cursor-pointer rounded-xl"
+            style={{ border: 'var(--border-ghost)' }}
           />
           <input
             type="text"
             value={value.color}
             onChange={(e) => onChange({ ...value, color: e.target.value })}
-            className="flex-1 px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+            className="flex-1 px-3 py-2 rounded-2xl bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+            style={{ border: 'var(--border-ghost)' }}
             placeholder="#000000"
           />
         </div>
       ) : (
         <div className="space-y-3 pt-1">
-          {/* Type selector */}
-          <div className="flex gap-2">
+          {/* Linear / Radial chip toggle */}
+          <div className="flex gap-1.5">
             {(['linear', 'radial'] as GradientType[]).map((t) => (
               <button
                 key={t}
@@ -92,11 +92,16 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
                 onClick={() =>
                   onChange({ ...value, gradient: { ...value.gradient, type: t } })
                 }
-                className={`flex-1 py-1.5 text-xs rounded-md border transition-colors ${
+                className={`flex-1 py-1.5 text-xs rounded-full font-medium transition-all cursor-pointer ${
                   value.gradient.type === t
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
-                    : 'border-zinc-300 dark:border-zinc-600 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-700'
+                    ? 'text-on-primary'
+                    : 'bg-secondary-fixed text-on-secondary-container hover:bg-surface-container-high'
                 }`}
+                style={
+                  value.gradient.type === t
+                    ? { background: 'var(--gradient-primary-subtle)' }
+                    : {}
+                }
               >
                 {t.charAt(0).toUpperCase() + t.slice(1)}
               </button>
@@ -106,9 +111,12 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
           {/* Rotation (linear only) */}
           {value.gradient.type === 'linear' && (
             <div>
-              <label className="block text-xs text-zinc-600 dark:text-zinc-400 mb-1">
-                Rotation: {value.gradient.rotation}deg
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="text-xs font-semibold text-on-surface">Rotation</label>
+                <span className="text-xs font-medium text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded-full">
+                  {value.gradient.rotation}deg
+                </span>
+              </div>
               <input
                 type="range"
                 min={0}
@@ -120,7 +128,6 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
                     gradient: { ...value.gradient, rotation: Number(e.target.value) },
                   })
                 }
-                className="w-full"
               />
             </div>
           )}
@@ -129,7 +136,7 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
           <div className="grid grid-cols-2 gap-3">
             {([0, 1] as const).map((i) => (
               <div key={i}>
-                <label className="block text-xs text-zinc-600 dark:text-zinc-400 mb-1">
+                <label className="block text-xs font-semibold text-on-surface mb-1.5">
                   {i === 0 ? 'Start' : 'End'}
                 </label>
                 <div className="flex items-center gap-1.5">
@@ -137,13 +144,15 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
                     type="color"
                     value={value.gradient.colorStops[i].color}
                     onChange={(e) => updateGradientColor(i, e.target.value)}
-                    className="h-8 w-10 cursor-pointer rounded border border-zinc-300 dark:border-zinc-600 shrink-0"
+                    className="h-8 w-10 cursor-pointer rounded-xl shrink-0"
+                    style={{ border: 'var(--border-ghost)' }}
                   />
                   <input
                     type="text"
                     value={value.gradient.colorStops[i].color}
                     onChange={(e) => updateGradientColor(i, e.target.value)}
-                    className="flex-1 min-w-0 px-2 py-1.5 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
+                    className="flex-1 min-w-0 px-2 py-1.5 rounded-xl bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 text-xs"
+                    style={{ border: 'var(--border-ghost)' }}
                     placeholder="#000000"
                   />
                 </div>

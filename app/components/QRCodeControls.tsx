@@ -58,22 +58,38 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
   }
 
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-2xl shadow-xl p-6 flex flex-col">
-      <h2 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4">
-        Customization
+    <div
+      className="rounded-4xl p-7 flex flex-col"
+      style={{
+        background: 'rgba(255, 255, 255, 0.72)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        boxShadow: 'var(--shadow-ambient)',
+      }}
+    >
+      <h2
+        className="text-2xl font-bold text-on-surface mb-5"
+        style={{ letterSpacing: '-0.01em' }}
+      >
+        Customize Appearance
       </h2>
 
-      {/* Tab navigation */}
-      <div className="flex border-b border-zinc-200 dark:border-zinc-700 mb-5 overflow-x-auto">
+      {/* Chip tab navigation */}
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+            className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all cursor-pointer ${
               activeTab === tab.id
-                ? 'border-blue-500 text-blue-600 dark:text-blue-400'
-                : 'border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
+                ? 'text-on-primary'
+                : 'bg-secondary-fixed text-on-secondary-container hover:bg-surface-container-high'
             }`}
+            style={
+              activeTab === tab.id
+                ? { background: 'var(--gradient-primary-subtle)' }
+                : {}
+            }
           >
             {tab.label}
           </button>
@@ -86,18 +102,19 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
         {/* ---- Content ---- */}
         {activeTab === 'content' && (
           <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+            <label className="block text-sm font-semibold text-on-surface mb-2">
               QR Code Content
             </label>
             <textarea
               value={config.text}
               onChange={(e) => update({ text: e.target.value })}
               placeholder="Enter text or URL"
-              className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="w-full px-4 py-3 rounded-2xl bg-surface-container-low text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none text-sm"
+              style={{ border: 'var(--border-ghost)', lineHeight: 1.6 }}
               rows={5}
               maxLength={1000}
             />
-            <div className="mt-1 text-right text-xs text-zinc-500 dark:text-zinc-400">
+            <div className="mt-1.5 text-right text-xs text-on-surface-variant">
               {config.text.length} / 1000
             </div>
           </div>
@@ -125,7 +142,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">
                   Border (outer square)
                 </p>
                 <SelectInput
@@ -142,7 +159,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
               </div>
 
               <div className="space-y-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <p className="text-xs font-semibold uppercase tracking-widest text-on-surface-variant">
                   Center (inner dot)
                 </p>
                 <SelectInput
@@ -198,7 +215,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
               onLogoRemove={() => update({ logo: null })}
               onLogoSizeChange={(v) => update({ logoSize: v })}
             />
-            <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs text-on-surface-variant">
               Logo size is a percentage of the QR code area.
             </p>
           </>
@@ -206,18 +223,19 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
       </div>
 
       {/* Generate + Reset buttons */}
-      <div className="mt-6 pt-5 border-t border-zinc-200 dark:border-zinc-700 flex gap-3">
+      <div className="mt-7 flex gap-3">
         <button
           onClick={() => onChange({ ...createDefaultConfig(), text: config.text })}
           title="Reset all settings to default"
-          className="cursor-pointer px-4 py-3 bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 rounded-xl font-semibold hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors flex items-center gap-2"
+          className="cursor-pointer px-5 py-3 rounded-full font-semibold text-sm transition-colors flex items-center gap-2 bg-secondary-container text-on-secondary-container hover:bg-surface-container-high"
         >
-          <RotateCcw size={16} />
+          <RotateCcw size={15} />
           Reset
         </button>
         <button
           onClick={onGenerate}
-          className="flex-1 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center justify-center gap-2"
+          className="flex-1 py-3 rounded-full font-semibold text-sm text-on-primary transition-opacity hover:opacity-90 active:opacity-80 flex items-center justify-center gap-2 cursor-pointer"
+          style={{ background: 'var(--gradient-primary)' }}
         >
           Generate QR Code
         </button>

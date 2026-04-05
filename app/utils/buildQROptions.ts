@@ -29,6 +29,7 @@ export function buildQROptions(config: QRConfig) {
     },
     backgroundOptions: {
       ...buildColorOption(config.backgroundColor),
+      round: config.backgroundRoundness / 50,
     },
     cornersSquareOptions: {
       type: config.markerBorderStyle,

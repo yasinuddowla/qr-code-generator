@@ -13,13 +13,13 @@ interface SelectInputProps {
 export default function SelectInput({ label, value, options, onChange }: SelectInputProps) {
   return (
     <div>
-      <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+      <label className="block text-sm font-semibold text-on-surface mb-2">
         {label}
       </label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full form-select"
+        className="form-select"
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
