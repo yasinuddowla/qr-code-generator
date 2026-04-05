@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Download } from 'lucide-react';
 import type QRCodeStylingType from 'qr-code-styling';
 import { QRConfig } from '../types';
 import { buildQROptions } from '../utils/buildQROptions';
@@ -44,27 +44,39 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
 
   return (
     <div
-      className="bg-surface-container-lowest rounded-4xl p-12 flex flex-col"
-      style={{ boxShadow: 'var(--shadow-ambient)' }}
+      className="rounded-4xl p-8 flex flex-col"
+      style={{
+        background: 'rgba(252, 249, 248, 0.80)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        boxShadow: 'var(--shadow-ambient)',
+      }}
     >
       <h2
         className="text-2xl font-bold text-on-surface mb-6"
-        style={{ letterSpacing: '-0.01em' }}
+        style={{ letterSpacing: '-0.02em' }}
       >
         Preview
       </h2>
 
-      <div className="relative flex items-center justify-center flex-1 min-h-[300px] bg-surface-container-low rounded-4xl p-8">
+      {/* QR canvas — surface-container-lowest (white) as the illuminated output area */}
+      <div
+        className="relative flex items-center justify-center flex-1 min-h-[300px] rounded-3xl p-8"
+        style={{
+          background: 'var(--surface-container-lowest)',
+          boxShadow: '0px 20px 50px rgba(28, 27, 27, 0.05)',
+        }}
+      >
         {(isLoading || isGenerating) && hasText && (
-          <div className="absolute inset-0 flex items-center justify-center bg-surface-container-low/80 rounded-4xl z-10">
+          <div
+            className="absolute inset-0 flex items-center justify-center rounded-3xl z-10"
+            style={{ background: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(4px)' }}
+          >
             <Loader2 size={32} className="animate-spin text-primary" />
           </div>
         )}
         {hasText ? (
-          <div
-            ref={containerRef}
-            style={{ lineHeight: 0 }}
-          />
+          <div ref={containerRef} style={{ lineHeight: 0 }} />
         ) : (
           <p className="text-on-surface-variant text-center text-sm" style={{ lineHeight: 1.6 }}>
             Enter text or URL to generate a QR code
@@ -72,18 +84,25 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
         )}
       </div>
 
+      {/* Download buttons — right-aligned, gradient CTA */}
       {hasText && (
-        <div className="mt-8 flex justify-end gap-2.5">
-          {(['svg', 'png', 'jpg'] as const).map((fmt) => (
-            <button
-              key={fmt}
-              onClick={() => handleDownload(fmt)}
-              className="px-5 py-2.5 rounded-full font-semibold text-sm text-on-primary transition-opacity hover:opacity-90 active:opacity-80 cursor-pointer"
-              style={{ background: 'var(--gradient-primary)' }}
-            >
-              {fmt.toUpperCase()}
-            </button>
-          ))}
+        <div className="mt-6 flex items-center justify-between gap-2">
+          <span className="text-xs text-on-surface-variant font-medium">
+            Download as
+          </span>
+          <div className="flex gap-2">
+            {(['svg', 'png', 'jpg'] as const).map((fmt) => (
+              <button
+                key={fmt}
+                onClick={() => handleDownload(fmt)}
+                className="px-4 py-2 rounded-full font-semibold text-xs text-on-primary transition-opacity hover:opacity-90 active:opacity-80 cursor-pointer flex items-center gap-1.5"
+                style={{ background: 'var(--gradient-primary)' }}
+              >
+                <Download size={12} />
+                {fmt.toUpperCase()}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

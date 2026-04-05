@@ -1,40 +1,42 @@
 @import "tailwindcss";
 
 :root {
-  /* Surface hierarchy */
-  --surface: #f0f2f7;
-  --surface-container-lowest: #f7f8fc;
-  --surface-container-low: #e9ecf2;
-  --surface-container: #e1e5ed;
-  --surface-container-high: #d6dae5;
-  --surface-container-highest: #ccd1de;
+  /* Surface hierarchy — "Sunset Ember" warm whites */
+  --surface: #fcf9f8;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f6f3f2;
+  --surface-container: #f0edec;
+  --surface-container-high: #ebe7e7;
+  --surface-container-highest: #e5e2e1;
 
-  /* Primary palette (muted lavender) */
-  --primary: #484d73;
-  --primary-container: #b0b6f0;
-  --primary-dim: #3c4162;
-  --primary-fixed-dim: #8890c4;
+  /* Primary palette (terracotta ember) */
+  --primary: #a53b23;
+  --primary-container: #f27457;
+  --primary-dim: #8c3020;
+  --primary-fixed-dim: #c9553a;
   --on-primary: #ffffff;
 
-  /* Secondary palette (slate blue) */
-  --secondary: #4c5169;
-  --secondary-container: #d5d8ee;
-  --secondary-fixed: #d5d8ee;
-  --on-secondary-container: #141626;
+  /* Secondary palette (warm amber) */
+  --secondary: #845400;
+  --secondary-container: #f5ddb5;
+  --secondary-fixed: #f5ddb5;
+  --on-secondary: #ffffff;
+  --on-secondary-container: #2b1c00;
 
-  /* On-surface tokens */
-  --on-surface: #22282b;
-  --on-surface-variant: #4a5560;
+  /* On-surface tokens — deep charcoal, never pure black */
+  --on-surface: #1c1b1b;
+  --on-surface-variant: #57423d;
 
   /* Outline */
-  --outline-variant: #9aa3b2;
+  --outline-variant: #dec0b9;
 
-  /* Composed tokens — edit these to update gradients/shadows in one place */
+  /* Composed tokens */
   --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-container));
-  --gradient-primary-subtle: linear-gradient(135deg, var(--primary), var(--primary-dim));
-  --shadow-ambient: 0px 20px 40px rgba(72, 77, 115, 0.12);
-  --border-ghost: 1px solid rgba(154, 163, 178, 0.3);
-  --border-ghost-dashed: 2px dashed rgba(154, 163, 178, 0.5);
+  --gradient-primary-subtle: linear-gradient(135deg, var(--primary-dim), var(--primary));
+  --shadow-ambient: 0px 40px 60px rgba(28, 27, 27, 0.05);
+  --shadow-card: 0px 20px 40px rgba(28, 27, 27, 0.04);
+  --border-ghost: 1px solid rgba(222, 192, 185, 0.25);
+  --border-ghost-dashed: 2px dashed rgba(222, 192, 185, 0.5);
 }
 
 @theme inline {
@@ -52,6 +54,7 @@
   --color-secondary: var(--secondary);
   --color-secondary-container: var(--secondary-container);
   --color-secondary-fixed: var(--secondary-fixed);
+  --color-on-secondary: var(--on-secondary);
   --color-on-secondary-container: var(--on-secondary-container);
   --color-on-surface: var(--on-surface);
   --color-on-surface-variant: var(--on-surface-variant);
@@ -85,7 +88,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 9999px;
   background: var(--primary);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(72, 77, 115, 0.3);
+  box-shadow: 0 2px 8px rgba(165, 59, 35, 0.35);
   transition: transform 0.15s ease;
 }
 input[type="range"]::-webkit-slider-thumb:hover {
@@ -98,17 +101,17 @@ input[type="range"]::-moz-range-thumb {
   background: var(--primary);
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 8px rgba(72, 77, 115, 0.3);
+  box-shadow: 0 2px 8px rgba(165, 59, 35, 0.35);
 }
 
-/* Form select — surface-container-low fill, ghost border */
+/* Form select — surface-container fill, ghost border */
 .form-select {
-  @apply w-full pl-3 pr-8 py-2 text-sm rounded-2xl bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20;
+  @apply w-full pl-3 pr-8 py-2 text-sm rounded-2xl bg-surface-container text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20;
   border: var(--border-ghost);
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%235c6872' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2357423d' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right 0.625rem center;
   background-size: 1.25em 1.25em;

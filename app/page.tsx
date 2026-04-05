@@ -18,22 +18,29 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen bg-surface overflow-hidden">
-      {/* Decorative gradient blobs */}
+      {/* Decorative ambient blobs */}
       <div
-        className="pointer-events-none absolute -top-32 -right-32 w-[560px] h-[560px] rounded-full opacity-40"
-        style={{ background: 'radial-gradient(circle, var(--primary-container) 0%, transparent 70%)' }}
+        className="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-50"
+        style={{ background: 'radial-gradient(circle, #f27457 0%, transparent 65%)' }}
       />
       <div
-        className="pointer-events-none absolute -bottom-40 -left-40 w-[480px] h-[480px] rounded-full opacity-30"
-        style={{ background: 'radial-gradient(circle, var(--secondary-container) 0%, transparent 70%)' }}
+        className="pointer-events-none absolute -bottom-48 -left-48 w-[520px] h-[520px] rounded-full opacity-30"
+        style={{ background: 'radial-gradient(circle, #f5ddb5 0%, transparent 65%)' }}
+      />
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full opacity-20"
+        style={{ background: 'radial-gradient(circle, #a53b23 0%, transparent 70%)' }}
       />
 
       <div className="relative max-w-6xl mx-auto px-6 py-14">
         <Header />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        {/* Asymmetrical layout: controls left, preview right (sticky) */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 items-start">
           <QRCodeControls config={config} onChange={setConfig} onGenerate={handleGenerate} />
-          <QRCodePreview config={config} isGenerating={isGenerating} />
+          <div className="lg:sticky lg:top-10">
+            <QRCodePreview config={config} isGenerating={isGenerating} />
+          </div>
         </div>
 
         <Footer />

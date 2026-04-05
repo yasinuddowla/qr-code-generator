@@ -42,12 +42,12 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
               onClick={() => onChange({ ...value, mode })}
               className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
                 value.mode === mode
-                  ? 'text-on-primary'
-                  : 'bg-secondary-fixed text-on-secondary-container hover:bg-surface-container-high'
+                  ? 'text-on-secondary'
+                  : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'
               }`}
               style={
                 value.mode === mode
-                  ? { background: 'var(--gradient-primary-subtle)' }
+                  ? { background: 'var(--secondary)' }
                   : {}
               }
             >
@@ -76,7 +76,7 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
             type="text"
             value={value.color}
             onChange={(e) => onChange({ ...value, color: e.target.value })}
-            className="flex-1 px-3 py-2 rounded-2xl bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
+            className="flex-1 px-3 py-2 rounded-2xl bg-surface-container text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm"
             style={{ border: 'var(--border-ghost)' }}
             placeholder="#000000"
           />
@@ -94,12 +94,12 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
                 }
                 className={`flex-1 py-1.5 text-xs rounded-full font-medium transition-all cursor-pointer ${
                   value.gradient.type === t
-                    ? 'text-on-primary'
-                    : 'bg-secondary-fixed text-on-secondary-container hover:bg-surface-container-high'
+                    ? 'text-on-secondary'
+                    : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'
                 }`}
                 style={
                   value.gradient.type === t
-                    ? { background: 'var(--gradient-primary-subtle)' }
+                    ? { background: 'var(--secondary)' }
                     : {}
                 }
               >
@@ -113,7 +113,7 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-semibold text-on-surface">Rotation</label>
-                <span className="text-xs font-medium text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded-full">
+                <span className="text-xs font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">
                   {value.gradient.rotation}deg
                 </span>
               </div>
@@ -151,7 +151,7 @@ export default function GradientColorPicker({ label, value, onChange }: Props) {
                     type="text"
                     value={value.gradient.colorStops[i].color}
                     onChange={(e) => updateGradientColor(i, e.target.value)}
-                    className="flex-1 min-w-0 px-2 py-1.5 rounded-xl bg-surface-container-low text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 text-xs"
+                    className="flex-1 min-w-0 px-2 py-1.5 rounded-xl bg-surface-container text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20 text-xs"
                     style={{ border: 'var(--border-ghost)' }}
                     placeholder="#000000"
                   />

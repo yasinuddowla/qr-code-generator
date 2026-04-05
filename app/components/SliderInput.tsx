@@ -12,7 +12,7 @@ export default function SliderInput({ label, value, min, max, onChange, unit = '
     <div>
       <div className="flex items-center justify-between mb-2">
         <label className="text-sm font-semibold text-on-surface">{label}</label>
-        <span className="text-xs font-medium text-on-surface-variant bg-surface-container-low px-2 py-0.5 rounded-full">
+        <span className="text-xs font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">
           {value}{unit}
         </span>
       </div>

@@ -61,15 +61,15 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
     <div
       className="rounded-4xl p-7 flex flex-col"
       style={{
-        background: 'rgba(255, 255, 255, 0.72)',
-        backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
+        background: 'rgba(252, 249, 248, 0.80)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
         boxShadow: 'var(--shadow-ambient)',
       }}
     >
       <h2
         className="text-2xl font-bold text-on-surface mb-5"
-        style={{ letterSpacing: '-0.01em' }}
+        style={{ letterSpacing: '-0.02em' }}
       >
         Customize Appearance
       </h2>
@@ -82,12 +82,12 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all cursor-pointer ${
               activeTab === tab.id
-                ? 'text-on-primary'
-                : 'bg-secondary-fixed text-on-secondary-container hover:bg-surface-container-high'
+                ? 'text-on-secondary'
+                : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high'
             }`}
             style={
               activeTab === tab.id
-                ? { background: 'var(--gradient-primary-subtle)' }
+                ? { background: 'var(--secondary)' }
                 : {}
             }
           >
@@ -109,7 +109,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
               value={config.text}
               onChange={(e) => update({ text: e.target.value })}
               placeholder="Enter text or URL"
-              className="w-full px-4 py-3 rounded-2xl bg-surface-container-low text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none text-sm"
+              className="w-full px-4 py-3 rounded-2xl bg-surface-container text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:ring-2 focus:ring-primary/20 resize-none text-sm"
               style={{ border: 'var(--border-ghost)', lineHeight: 1.6 }}
               rows={5}
               maxLength={1000}
@@ -227,7 +227,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
         <button
           onClick={() => onChange({ ...createDefaultConfig(), text: config.text })}
           title="Reset all settings to default"
-          className="cursor-pointer px-5 py-3 rounded-full font-semibold text-sm transition-colors flex items-center gap-2 bg-secondary-container text-on-secondary-container hover:bg-surface-container-high"
+          className="cursor-pointer px-5 py-3 rounded-full font-semibold text-sm transition-colors flex items-center gap-2 bg-surface-container-high text-on-surface-variant hover:bg-surface-container-highest"
         >
           <RotateCcw size={15} />
           Reset

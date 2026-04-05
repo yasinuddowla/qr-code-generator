@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className="mb-12">
+    <div className="mb-14">
       <p className="text-sm font-semibold tracking-widest uppercase text-on-surface-variant mb-3">
         Free &amp; Open Source
       </p>
@@ -17,7 +17,7 @@ export default function Header() {
           Generator
         </span>
       </h1>
-      <p className="text-base text-on-surface-variant max-w-sm" style={{ lineHeight: 1.6 }}>
+      <p className="text-base text-on-surface-variant max-w-md" style={{ lineHeight: 1.65 }}>
         Create beautiful, customizable QR codes with colors, gradients, and logos.
       </p>
     </div>
