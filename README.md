@@ -6,9 +6,13 @@ Created by [Yasin Uddowla](https://yasinuddowla.com)
 
 ## Features
 
-- **Custom Colors**: Customize pattern and background colors
-- **Logo Support**: Add your logo to QR codes with adjustable size
-- **Margin Control**: Adjust QR code margin size (0-50px)
+- **Dot Styles**: Choose from Square, Dots, Rounded, Classy, Classy Rounded, or Extra Rounded dot patterns
+- **Dot Color**: Solid or gradient color for QR dots
+- **Marker Customization**: Independently style the border (outer square) and center (inner dot) of corner markers
+- **Marker Colors**: Separate solid or gradient colors for marker border and center
+- **Background Color**: Solid or gradient background with adjustable roundness (0-50%)
+- **Margin Control**: Adjust QR code margin size (0-50)
+- **Logo Support**: Upload a logo and adjust its size as a percentage of the QR code area
 - **Download**: Download QR codes as PNG images
 - **Dark Mode**: Beautiful dark mode support
 - **Responsive**: Works perfectly on all devices
