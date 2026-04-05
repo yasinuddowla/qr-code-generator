@@ -15,8 +15,8 @@ function buildColorOption(colorConfig: ColorConfig) {
 
 export function buildQROptions(config: QRConfig) {
   return {
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     type: 'svg' as const,
     data: config.text || ' ',
     margin: config.margin,

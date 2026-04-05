@@ -17,7 +17,7 @@ export default function Home() {
   }
 
   return (
-    <div className="relative min-h-screen bg-surface overflow-hidden">
+    <div className="relative min-h-screen bg-surface overflow-hidden flex flex-col">
       {/* Decorative ambient blobs */}
       <div
         className="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-50"
@@ -32,7 +32,7 @@ export default function Home() {
         style={{ background: 'radial-gradient(circle, #a53b23 0%, transparent 70%)' }}
       />
 
-      <div className="relative max-w-6xl mx-auto px-6 py-14">
+      <div className="relative max-w-7xl mx-auto px-6 py-6 flex-1 flex flex-col pb-5">
         <Header />
 
         {/* Asymmetrical layout: controls left, preview right (sticky) */}
