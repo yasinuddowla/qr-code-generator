@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Loader2, Download } from 'lucide-react';
+import { Loader2, Download, ChevronDown } from 'lucide-react';
 import type QRCodeStylingType from 'qr-code-styling';
 import { QRConfig } from '../types';
 import { buildQROptions } from '../utils/buildQROptions';
@@ -11,10 +11,16 @@ interface Props {
   isGenerating?: boolean;
 }
 
+const FORMATS = ['SVG', 'PNG', 'JPG'] as const;
+type Format = typeof FORMATS[number];
+
 export default function QRCodePreview({ config, isGenerating = false }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const qrInstanceRef = useRef<QRCodeStylingType | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFormat, setSelectedFormat] = useState<Format>('PNG');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -31,9 +37,20 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
     });
   }, [config]);
 
-  function handleDownload(format: 'svg' | 'png' | 'jpg') {
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  function handleDownload() {
     if (!qrInstanceRef.current) return;
-    const extension = format === 'jpg' ? 'jpeg' : format;
+    const fmt = selectedFormat.toLowerCase() as 'svg' | 'png' | 'jpg';
+    const extension = fmt === 'jpg' ? 'jpeg' : fmt;
     qrInstanceRef.current.download({
       name: 'qr-code',
       extension: extension as 'svg' | 'png' | 'jpeg',
@@ -78,25 +95,56 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
         )}
       </div>
 
-      {/* Download buttons — right-aligned, gradient CTA */}
+      {/* Download row: label — format dropdown — download button */}
       {hasText && (
-        <div className="mt-6 flex items-center justify-between gap-2">
-          <span className="text-xs text-on-surface-variant font-medium">
-            Download as
-          </span>
-          <div className="flex gap-2">
-            {(['svg', 'png', 'jpg'] as const).map((fmt) => (
-              <button
-                key={fmt}
-                onClick={() => handleDownload(fmt)}
-                className="px-4 py-2 rounded-full font-semibold text-xs text-on-primary transition-opacity hover:opacity-90 active:opacity-80 cursor-pointer flex items-center gap-1.5"
-                style={{ background: 'var(--gradient-primary)' }}
+        <div className="mt-6 flex items-center gap-3">
+
+          {/* Format dropdown */}
+          <div className="relative flex-1" ref={dropdownRef}>
+            <button
+              onClick={() => setDropdownOpen((o) => !o)}
+              className="w-full px-4 py-2 rounded-full text-xs font-semibold text-on-surface flex items-center justify-between gap-2 cursor-pointer transition-colors hover:bg-surface-container-high bg-surface-container"
+              style={{ border: 'var(--border-ghost)' }}
+            >
+              {selectedFormat}
+              <ChevronDown size={13} className={`transition-transform shrink-0 ${dropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {dropdownOpen && (
+              <div
+                className="absolute left-0 top-full mt-1.5 w-full rounded-2xl overflow-hidden z-20"
+                style={{
+                  background: 'var(--surface-container-lowest)',
+                  boxShadow: '0px 8px 24px rgba(28,27,27,0.12)',
+                  border: 'var(--border-ghost)',
+                }}
               >
-                <Download size={12} />
-                {fmt.toUpperCase()}
-              </button>
-            ))}
+                {FORMATS.map((fmt) => (
+                  <button
+                    key={fmt}
+                    onClick={() => { setSelectedFormat(fmt); setDropdownOpen(false); }}
+                    className={`w-full px-4 py-2 text-xs font-semibold text-left transition-colors cursor-pointer ${
+                      selectedFormat === fmt
+                        ? 'text-primary bg-surface-container'
+                        : 'text-on-surface hover:bg-surface-container-low'
+                    }`}
+                  >
+                    {fmt}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
+
+          {/* Download button */}
+          <button
+            onClick={handleDownload}
+            className="px-5 py-2 rounded-full font-semibold text-xs text-on-primary transition-opacity hover:opacity-90 active:opacity-80 cursor-pointer flex items-center gap-1.5 shrink-0"
+            style={{ background: 'var(--gradient-primary)' }}
+          >
+            <Download size={12} />
+            Download
+          </button>
         </div>
       )}
     </div>
