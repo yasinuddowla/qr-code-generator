@@ -44,7 +44,7 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
 
   return (
     <div
-      className="rounded-4xl p-8 flex flex-col"
+      className="rounded-4xl p-5 sm:p-8 flex flex-col"
       style={{
         background: 'rgba(252, 249, 248, 0.80)',
         backdropFilter: 'blur(20px)',
@@ -55,7 +55,7 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
 
       {/* QR canvas — surface-container-lowest (white) as the illuminated output area */}
       <div
-        className="relative flex items-center justify-center flex-1 min-h-[300px] rounded-3xl p-8"
+        className="relative flex items-center justify-center flex-1 min-h-[260px] rounded-3xl p-4 sm:p-8"
         style={{
           background: 'var(--surface-container-lowest)',
           boxShadow: '0px 20px 50px rgba(28, 27, 27, 0.05)',
@@ -70,7 +70,7 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
           </div>
         )}
         {hasText ? (
-          <div ref={containerRef} style={{ lineHeight: 0 }} />
+          <div ref={containerRef} className="[&>svg]:max-w-full [&>canvas]:max-w-full" style={{ lineHeight: 0, maxWidth: '100%' }} />
         ) : (
           <p className="text-on-surface-variant text-center text-sm" style={{ lineHeight: 1.6 }}>
             Enter text or URL to generate a QR code

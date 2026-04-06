@@ -59,7 +59,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
 
   return (
     <div
-      className="rounded-4xl p-7 flex flex-col"
+      className="rounded-4xl p-5 sm:p-7 flex flex-col"
       style={{
         background: 'rgba(252, 249, 248, 0.80)',
         backdropFilter: 'blur(20px)',

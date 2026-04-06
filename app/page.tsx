@@ -32,13 +32,13 @@ export default function Home() {
         style={{ background: 'radial-gradient(circle, #a53b23 0%, transparent 70%)' }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6 py-6 flex-1 flex flex-col pb-5">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-6 flex-1 flex flex-col pb-5">
         <Header />
 
         {/* Asymmetrical layout: controls left, preview right (sticky) */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 sm:gap-10 items-start">
           <QRCodeControls config={config} onChange={setConfig} onGenerate={handleGenerate} />
-          <div className="lg:sticky lg:top-10">
+          <div className="order-first lg:order-0 lg:sticky lg:top-10">
             <QRCodePreview config={config} isGenerating={isGenerating} />
           </div>
         </div>
