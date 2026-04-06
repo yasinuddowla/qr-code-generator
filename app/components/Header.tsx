@@ -5,7 +5,7 @@ export default function Header() {
         Free &amp; Open Source
       </p>
       <h1
-        className="text-5xl font-extrabold text-on-surface mb-4"
+        className="text-3xl sm:text-5xl font-extrabold text-on-surface mb-4"
         style={{ letterSpacing: '-0.02em', lineHeight: 1.1 }}
       >
         QR Code&nbsp;
@@ -16,7 +16,7 @@ export default function Header() {
           Generator
         </span>
       </h1>
-      <p className="text-base text-on-surface-variant" style={{ lineHeight: 1.65 }}>
+      <p className="text-sm sm:text-base text-on-surface-variant" style={{ lineHeight: 1.65 }}>
         Create beautiful, customizable QR codes with colors, gradients, and logos.
       </p>
     </div>

@@ -68,7 +68,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
       }}
     >
       <h2
-        className="text-2xl font-bold text-on-surface mb-5"
+        className="text-xl sm:text-2xl font-bold text-on-surface mb-5"
         style={{ letterSpacing: '-0.02em' }}
       >
         Customize Appearance
