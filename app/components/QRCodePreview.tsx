@@ -112,7 +112,7 @@ export default function QRCodePreview({ config, isGenerating = false }: Props) {
 
             {dropdownOpen && (
               <div
-                className="absolute left-0 top-full mt-1.5 w-full rounded-2xl overflow-hidden z-20"
+                className="absolute left-0 bottom-full mb-1.5 w-full rounded-2xl overflow-hidden z-20"
                 style={{
                   background: 'var(--surface-container-lowest)',
                   boxShadow: '0px 8px 24px rgba(28,27,27,0.12)',
