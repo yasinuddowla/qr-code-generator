@@ -75,7 +75,7 @@ export default function QRCodeControls({ config, onChange, onGenerate }: Props) 
       </h2>
 
       {/* Chip tab navigation */}
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
         {TABS.map((tab) => (
           <button
             key={tab.id}
